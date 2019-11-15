@@ -1,0 +1,27 @@
+Here is an unedited version of code that i found for a basic translation. 
+
+
+dna1 <- DNAString("TTGATATGGCCCTTATAA")
+translate(dna1)
+
+SGC1 <- getGeneticCode("SGC1")  # Vertebrate Mitochondrial code
+translate(dna1, genetic.code=SGC1)
+
+## All 6 codons except 4th (CCC) are fuzzy:
+dna2 <- DNAString("HTGATHTGRCCCYTRTRA")
+
+## Not run: 
+  translate(dna2)  # error because of fuzzy codons
+
+## End(Not run)
+
+## Translate all fuzzy codons to X:
+translate(dna2, if.fuzzy.codon="X")
+
+## Or solve the non-ambiguous ones (3rd codon is ambiguous so cannot be
+## solved):
+translate(dna2, if.fuzzy.codon="solve")
+
+## Fuzzy codons that are non-ambiguous with a given genetic code can
+## become ambiguous with another genetic code, and vice versa:
+translate(dna2, genetic.code=SGC1, if.fuzzy.codon="solve")
