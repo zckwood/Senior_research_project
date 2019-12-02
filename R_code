@@ -1,27 +1,20 @@
-Here is an unedited version of code that i found for a basic translation. 
+BiocManager::install("RBioinf")
+BiocManager::install("Biostrings")
 
+library(RBioinf) #ranDNA package
 
-dna1 <- DNAString("TTGATATGGCCCTTATAA")
+library(Biostrings) #translate and conplement package
+
+#randomizes dna sequence up to 10002 characters *2 so that its even
+dna = randDNA(10002)
+
+#translates the dna sequence
+dna1 <- DNAString(dna)
+#convert the sequence so that the translate function will work
+
+#translates the dna sequence
 translate(dna1)
 
-SGC1 <- getGeneticCode("SGC1")  # Vertebrate Mitochondrial code
-translate(dna1, genetic.code=SGC1)
 
-## All 6 codons except 4th (CCC) are fuzzy:
-dna2 <- DNAString("HTGATHTGRCCCYTRTRA")
-
-## Not run: 
-  translate(dna2)  # error because of fuzzy codons
-
-## End(Not run)
-
-## Translate all fuzzy codons to X:
-translate(dna2, if.fuzzy.codon="X")
-
-## Or solve the non-ambiguous ones (3rd codon is ambiguous so cannot be
-## solved):
-translate(dna2, if.fuzzy.codon="solve")
-
-## Fuzzy codons that are non-ambiguous with a given genetic code can
-## become ambiguous with another genetic code, and vice versa:
-translate(dna2, genetic.code=SGC1, if.fuzzy.codon="solve")
+#find the complement and outputs the complement
+translate(complement(dna1))
