@@ -1,32 +1,18 @@
 import random
-#randomizes the dna sequence
-def DNA(length):
+from Bio.Seq import Seq
+from Bio.Alphabet import generic_dna
+
+def DNA(length): #randomizes dna sequence
     return ''.join(random.choice('CGTA') for _ in range(length))
 
-seq = DNA(10000)
 
-protein = {
-        'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
-        'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
-        'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K',
-        'AGC':'S', 'AGT':'S', 'AGA':'R', 'AGG':'R',
-        'CTA':'L', 'CTC':'L', 'CTG':'L', 'CTT':'L',
-        'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCT':'P',
-        'CAC':'H', 'CAT':'H', 'CAA':'Q', 'CAG':'Q',
-        'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGT':'R',
-        'GTA':'V', 'GTC':'V', 'GTG':'V', 'GTT':'V',
-        'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCT':'A',
-        'GAC':'D', 'GAT':'D', 'GAA':'E', 'GAG':'E',
-        'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
-        'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S',
-        'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
-        'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
-        'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W',
-    }
-protein_sequence =""
+my_dna = Seq(DNA(10), generic_dna)
 
-for i in range(0, len(seq)-(3+len(seq)%3), 3):
-    if protein[seq[i:i+3]] == "STOP" :
-        break
-    protein_sequence += protein[seq[i:i+3]]
-print("Protein Sequence: ", protein_sequence)
+dna2 = my_dna.reverse_complement()
+print my_dna #prints dna sequence
+print my_dna.translate() #prints first foward frame
+print my_dna[1:].translate() #prints 2nd forward frame
+print my_dna[2:].translate() #prints third forward frame
+print dna2.translate() #prints first backward frame
+print dna2[1:].translate() #prints second backward frame
+print dna2[2:].translate() #prints third backward frame
