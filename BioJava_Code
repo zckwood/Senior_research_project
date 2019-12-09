@@ -1,4 +1,4 @@
-//Here is the biojava code. this is not 100% optimized for I'm not the best at getting rid of uneeded imports and code.
+//Here is the biojava code
 package research;
 import java.util.Map;
 import java.util.Random;
