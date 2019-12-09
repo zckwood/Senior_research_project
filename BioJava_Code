@@ -25,23 +25,23 @@ public class translate {
 		//Gets dna sequence and is randomized 
 		DNASequence dna = new DNASequence(randomDNAString(100000));
 		
-		//System.out.println(dna);
+		//System.out.println(dna); this would output our randomized dna string
 		
-		//RNASequence rna = dna.getRNASequence();  
+		//RNASequence rna = dna.getRNASequence();  this would transcribe our random dna sequence
 		
-		//System.out.println(rna);
+		//System.out.println(rna); output the rna sequence
 				
-		//ProteinSequence protein = rna.getProteinSequence();
+		//ProteinSequence protein = rna.getProteinSequence(); translate the rna to protein
 		
-		// System.out.println(protein);
+		// System.out.println(protein); print the protein
 		
-		TranscriptionEngine te = TranscriptionEngine.getDefault();
+		TranscriptionEngine te = TranscriptionEngine.getDefault(); 
 		Frame[] frames = Frame.getReverseFrames();
 		Map<Frame, Sequence<AminoAcidCompound>> results1 = te.multipleFrameTranslation(dna, frames); 
-		System.out.println(results1);
+		System.out.println(results1); // this prints out from 3 lines of code all three reverse frames 
 		
 		Frame[] frames2 = Frame.getForwardFrames();
 		Map<Frame, Sequence<AminoAcidCompound>> results2 = te.multipleFrameTranslation(dna, frames2); 
-		System.out.println(results2);
+		System.out.println(results2); // this prints out from 2 lines of code all three forward frames
 		}
 }
