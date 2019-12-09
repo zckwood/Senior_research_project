@@ -1,35 +1,47 @@
-here is an unedited Biojava Code for translation. 
+//Here is the biojava code. this is not 100% optimized for I'm not the best at getting rid of uneeded imports and code.
+package research;
+import java.util.Map;
+import java.util.Random;
+import org.biojava.nbio.core.sequence.ProteinSequence;
+import org.biojava.nbio.core.exceptions.CompoundNotFoundException;
+import org.biojava.nbio.core.sequence.DNASequence;
+import org.biojava.nbio.core.sequence.RNASequence;
+import org.biojava.nbio.core.sequence.compound.AminoAcidCompound;
+import org.biojava.nbio.core.sequence.template.Sequence;
+import org.biojava.nbio.core.sequence.transcription.Frame;
+import org.biojava.nbio.core.sequence.transcription.TranscriptionEngine;
 
-public class Translate {
+public class translate {
+	public static String randomDNAString(int dnaLength) {
+	    Random rand = new Random();
+	    StringBuilder dna = new StringBuilder(dnaLength);
 
- public static void main(String[] args) {
-   try {
-     //create a DNA SymbolList
-     SymbolList symL = DNATools.createDNA("atggccattgaatga");
-
-     //transcribe to RNA (after biojava 1.4 this method is deprecated)
-     symL = RNATools.transcribe(symL);
-
-     //transcribe to RNA (after biojava 1.4 use this method instead)
-     symL = DNATools.toRNA(symL);
-     
-     //translate to protein
-     symL = RNATools.translate(symL);
-
-     //prove that it worked
-          System.out.println(symL.seqString());
-    }catch (IllegalAlphabetException ex) {
-     
-    
-     /* 
-      * this will occur if you try and transcribe a non DNA sequence or translate
-      * a sequence that isn't a triplet view on a RNA sequence.
-      */
-      ex.printStackTrace();
-    }catch (IllegalSymbolException ex) {
-     // this will happen if non IUB characters are used to create the DNA SymbolList
-      ex.printStackTrace();
-    }
-  }
-
-} ```
+	    for (int i = 0; i < dnaLength; i++) {
+	        dna.append("ACGT".charAt(rand.nextInt(4)));
+	    }
+	    return dna.toString();
+	}
+	public static void main(String args[]) throws CompoundNotFoundException {
+		//Gets dna sequence and is randomized 
+		DNASequence dna = new DNASequence(randomDNAString(100000));
+		
+		//System.out.println(dna);
+		
+		//RNASequence rna = dna.getRNASequence();  
+		
+		//System.out.println(rna);
+				
+		//ProteinSequence protein = rna.getProteinSequence();
+		
+		// System.out.println(protein);
+		
+		TranscriptionEngine te = TranscriptionEngine.getDefault();
+		Frame[] frames = Frame.getReverseFrames();
+		Map<Frame, Sequence<AminoAcidCompound>> results1 = te.multipleFrameTranslation(dna, frames); 
+		System.out.println(results1);
+		
+		Frame[] frames2 = Frame.getForwardFrames();
+		Map<Frame, Sequence<AminoAcidCompound>> results2 = te.multipleFrameTranslation(dna, frames2); 
+		System.out.println(results2);
+		}
+}
